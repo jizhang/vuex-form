@@ -5,6 +5,7 @@
       <b-navbar-brand to="/">NavBar</b-navbar-brand>
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav>
+          <b-nav-item to="/table-list">Table List</b-nav-item>
           <b-nav-item to="/non-strict">Non Strict</b-nav-item>
           <b-nav-item to="/local-copy">Local Copy</b-nav-item>
         </b-navbar-nav>
