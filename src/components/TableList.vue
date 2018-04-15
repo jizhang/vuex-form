@@ -1,6 +1,9 @@
 <template>
   <div class="page-table-list">
     <b-table :fields="fields" :items="tableList">
+      <template slot="category" slot-scope="data">
+        {{getCategoryName(data.item.category)}}
+      </template>
       <template slot="columns" slot-scope="data">
         {{data.item.columns.length}}
       </template>
@@ -19,13 +22,15 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'TableList',
   computed: {
     ...mapState('table', [
-      'tableList'
+      'tableList',
+      'categoryOptions',
     ]),
   },
 
@@ -50,7 +55,12 @@ export default {
       if (window.confirm('Are you sure?')) {
         this.deleteTable(table.id)
       }
-    }
+    },
+
+    getCategoryName (value) {
+      let option = _.find(this.categoryOptions, ['value', value])
+      return _.get(option, 'text', '-')
+    },
   }
 }
 </script>

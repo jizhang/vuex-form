@@ -7,6 +7,9 @@ const types = {
   UPDATE_TABLE: 'updateTable',
   UPDATE_TABLE_FORM: 'updateTableForm',
   RESET_TABLE: 'resetTable',
+  ADD_COLUMN: 'addColumn',
+  DELETE_COLUMN: 'deleteColumn',
+  UPDATE_COLUMN: 'updateColumn',
 }
 
 const getDefaultTable = () => {
@@ -67,6 +70,19 @@ export default {
     [types.UPDATE_TABLE_FORM] (state, payload) {
       _.assign(state.table, payload)
     },
+
+    [types.ADD_COLUMN] (state, payload) {
+      state.table.columns.push(payload)
+    },
+
+    [types.DELETE_COLUMN] (state, payload) {
+      state.table.columns.splice(payload, 1)
+    },
+
+    [types.UPDATE_COLUMN] (state, payload) {
+      const { index, column } = payload
+      _.assign(state.table.columns[index], column)
+    },
   },
 
   actions: {
@@ -99,6 +115,26 @@ export default {
       if (!_.isUndefined(table)) {
         commit(types.UPDATE_TABLE_FORM, _.cloneDeep(table))
       }
-    }
+    },
+
+    updateTableForm ({ commit }, payload) {
+      commit(types.UPDATE_TABLE_FORM, payload)
+    },
+
+    addColumn ({ commit }, payload) {
+      let column = _.assign({
+        column_name: '',
+        data_type: '',
+      }, payload)
+      commit(types.ADD_COLUMN, column)
+    },
+
+    deleteColumn ({ commit }, payload) {
+      commit(types.DELETE_COLUMN, payload)
+    },
+
+    updateColumn ({ commit }, payload) {
+      commit(types.UPDATE_COLUMN, payload)
+    },
   }
 }
