@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { getField, updateField } from 'vuex-map-fields'
 
 const types = {
   ADD_CATEGORY: 'addCategory',
@@ -33,7 +34,13 @@ export default {
     dataTypeOptions: ['int', 'varchar', 'datetime']
   },
 
+  getters: {
+    getField,
+  },
+
   mutations: {
+    updateField,
+
     [types.ADD_CATEGORY] (state, payload) {
       let maxId = _(state.categoryOptions).map('value').max()
       state.categoryOptions.push({
