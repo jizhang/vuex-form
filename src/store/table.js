@@ -41,6 +41,11 @@ export default {
   mutations: {
     updateField,
 
+    myUpdateField (state, payload) {
+      const { path, value } = payload
+      _.set(state, path, value)
+    },
+
     [types.ADD_CATEGORY] (state, payload) {
       let maxId = _(state.categoryOptions).map('value').max()
       state.categoryOptions.push({

@@ -67,6 +67,23 @@
 import _ from 'lodash'
 import { mapState, mapActions } from 'vuex'
 
+// eslint-disable-next-line no-unused-vars
+const mapFields = (namespace, fields) => {
+  return _(fields)
+    .map((path, alias) => {
+      return [alias, {
+        get () {
+          return _.get(this.$store.state[namespace], path)
+        },
+        set (value) {
+          this.$store.commit(`${namespace}/myUpdateField`, { path, value })
+        }
+      }]
+    })
+    .fromPairs()
+    .value()
+}
+
 export default {
   name: 'ComputedProperty',
   mounted () {
@@ -85,6 +102,11 @@ export default {
       'categoryOptions',
       'dataTypeOptions',
     ]),
+
+    // ...mapFields('table', {
+    //   tableName: 'table.table_name',
+    //   tableCategory: 'table.category',
+    // }),
 
     tableName: {
       get () {
