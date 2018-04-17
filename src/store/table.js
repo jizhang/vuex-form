@@ -46,6 +46,12 @@ export default {
       _.set(state, path, value)
     },
 
+    setTable (state, payload) {
+      state.table = payload
+      // _.assign(state.table, payload)
+      // state.table = _.cloneDeep(payload)
+    },
+
     [types.ADD_CATEGORY] (state, payload) {
       let maxId = _(state.categoryOptions).map('value').max()
       state.categoryOptions.push({
